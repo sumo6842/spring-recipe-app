@@ -15,7 +15,6 @@ import static lombok.AccessLevel.NONE;
 @Entity
 public class Notes {
     @Id
-    @Setter(NONE)
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @Lob

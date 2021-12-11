@@ -1,9 +1,12 @@
 package com.springframework.springrecipeapp.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +18,7 @@ import static lombok.AccessLevel.NONE;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
 @Entity
 public class Recipe {
 
@@ -26,6 +30,7 @@ public class Recipe {
     private String description;
     private Integer preTime;
     private Integer cookTime;
+    private BigDecimal amount;
     private Integer servings;
     private String source;
     private String url;

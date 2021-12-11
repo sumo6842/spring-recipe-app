@@ -16,7 +16,6 @@ import static lombok.AccessLevel.NONE;
 @NoArgsConstructor
 @RequiredArgsConstructor public class Ingredient {
     @Id
-    @Setter(NONE)
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @NonNull

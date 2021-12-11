@@ -14,7 +14,6 @@ import static lombok.AccessLevel.NONE;
 @Entity
 public class UnitOfMeasure {
     @Id
-    @Setter(NONE)
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
