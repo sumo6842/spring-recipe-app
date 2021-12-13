@@ -38,6 +38,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
+    @Transactional
     public RecipeCommands findCommandById(Long id) {
         return recipeToRecipeCommands.convert(findById(id));
     }
@@ -47,6 +48,7 @@ public class RecipeServiceImpl implements RecipeService{
     @Transactional
     public RecipeCommands saveRecipeCommand(RecipeCommands recipeCommand) {
         var detachRecipe = recipeCommandToRecipe.convert(recipeCommand);
+        if (detachRecipe == null) return null;
         var savedRecipe = recipeRepository.save(detachRecipe);
         log.debug("Saved RecipeId: " + savedRecipe.getId());
 
