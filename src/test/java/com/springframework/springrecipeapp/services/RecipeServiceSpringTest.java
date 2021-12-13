@@ -6,11 +6,8 @@ import com.springframework.springrecipeapp.model.Recipe;
 import com.springframework.springrecipeapp.repository.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 
@@ -19,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 //@DataJpaTest
 //@ExtendWith(SpringExtension.class)
 @SpringBootTest
-class RecipeServiceTest {
+class RecipeServiceSpringTest {
 
     public final String NEW_DESCRIPTION = "New Description";
 
@@ -59,6 +56,7 @@ class RecipeServiceTest {
         var recipeCommand = recipeCommandsConverter.convert(testRecipe);
 
         //when
+        assert recipeCommand != null;
         recipeCommand.setDescription(NEW_DESCRIPTION);
         var savedRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
         //then

@@ -22,7 +22,7 @@ import static java.util.Optional.of;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class RecipeServiceMapTest {
+class RecipeServiceMockitoTest {
     @Mock
     RecipeRepository recipeRepository;
     @Mock
