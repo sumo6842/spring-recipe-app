@@ -1,5 +1,6 @@
 package com.springframework.springrecipeapp.controller;
 
+import com.springframework.springrecipeapp.commands.RecipeCommands;
 import com.springframework.springrecipeapp.services.IngredientServices;
 import com.springframework.springrecipeapp.services.RecipeService;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +21,9 @@ public class IngredientsController {
     @GetMapping("/recipe/{recipeId}/ingredients")
     public String listIngredients(@PathVariable Long recipeId, Model model) {
         log.debug("Getting ingredients list for recipe id: " + recipeId);
-        model.addAttribute("recipe", recipeService.findCommandById(recipeId));
+        var command = recipeService.findCommandById(recipeId);
+        model.addAttribute("recipe", command);
         return "recipe/ingredient/list";
     }
-//
-//    @GetMapping("/recipe/{recipeId}/ingredient/show")
-//    public String newIngredient(@PathVariable String recipeId,
-//                                @PathVariable String id, Model model) {
-//
-//    }
-
 
 }

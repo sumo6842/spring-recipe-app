@@ -1,10 +1,12 @@
-package com.springframework.springrecipeapp.services;
+package com.springframework.springrecipeapp.model.services;
 
 import com.springframework.springrecipeapp.commands.RecipeCommands;
 import com.springframework.springrecipeapp.converters.RecipeCommandToRecipe;
 import com.springframework.springrecipeapp.converters.RecipeToRecipeCommands;
 import com.springframework.springrecipeapp.model.Recipe;
 import com.springframework.springrecipeapp.repository.RecipeRepository;
+import com.springframework.springrecipeapp.services.RecipeService;
+import com.springframework.springrecipeapp.services.RecipeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,9 +1,10 @@
-package com.springframework.springrecipeapp.services;
+package com.springframework.springrecipeapp.model.services;
 
 import com.springframework.springrecipeapp.converters.RecipeCommandToRecipe;
 import com.springframework.springrecipeapp.converters.RecipeToRecipeCommands;
 import com.springframework.springrecipeapp.model.Recipe;
 import com.springframework.springrecipeapp.repository.RecipeRepository;
+import com.springframework.springrecipeapp.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
