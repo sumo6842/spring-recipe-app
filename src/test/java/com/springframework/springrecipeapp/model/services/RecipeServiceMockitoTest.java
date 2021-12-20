@@ -1,9 +1,10 @@
 package com.springframework.springrecipeapp.model.services;
 
-import com.springframework.springrecipeapp.commands.RecipeCommands;
+import com.springframework.springrecipeapp.commands.RecipeCommand;
 import com.springframework.springrecipeapp.converters.RecipeCommandToRecipe;
 import com.springframework.springrecipeapp.converters.RecipeToRecipeCommands;
 import com.springframework.springrecipeapp.model.Recipe;
+import com.springframework.springrecipeapp.repository.IngredientRepository;
 import com.springframework.springrecipeapp.repository.RecipeRepository;
 import com.springframework.springrecipeapp.services.RecipeService;
 import com.springframework.springrecipeapp.services.RecipeServiceImpl;
@@ -32,11 +33,16 @@ class RecipeServiceMockitoTest {
     @Mock
     RecipeToRecipeCommands recipeToRecipeCommands;
 
+    @Mock
+    IngredientRepository ingredientRepository;
+
     RecipeService recipeService;
 
     @BeforeEach
     public void setUp() {
-        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommands);
+        recipeService = new RecipeServiceImpl(
+                recipeRepository, recipeCommandToRecipe,
+                recipeToRecipeCommands, ingredientRepository);
     }
 
     @Test
@@ -58,8 +64,9 @@ class RecipeServiceMockitoTest {
         var recipe = new Recipe();
         recipe.setId(1L);
         Optional<Recipe> recipeOptional = of(recipe);
+
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
-        RecipeCommands recipeCommands = new RecipeCommands();
+        RecipeCommand recipeCommands = new RecipeCommand();
         recipeCommands.setId(1L);
 
         when(recipeToRecipeCommands.convert(any())).thenReturn(recipeCommands);

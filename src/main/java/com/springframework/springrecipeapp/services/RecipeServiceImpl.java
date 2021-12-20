@@ -1,11 +1,12 @@
 package com.springframework.springrecipeapp.services;
 
-import com.springframework.springrecipeapp.commands.RecipeCommands;
+import com.springframework.springrecipeapp.commands.RecipeCommand;
 import com.springframework.springrecipeapp.converters.RecipeCommandToRecipe;
 import com.springframework.springrecipeapp.converters.RecipeToRecipeCommands;
+import com.springframework.springrecipeapp.exception.NotFoundException;
 import com.springframework.springrecipeapp.model.Recipe;
+import com.springframework.springrecipeapp.repository.IngredientRepository;
 import com.springframework.springrecipeapp.repository.RecipeRepository;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ public class RecipeServiceImpl implements RecipeService{
     private final RecipeRepository recipeRepository;
     private final RecipeCommandToRecipe recipeCommandToRecipe;
     private final RecipeToRecipeCommands recipeToRecipeCommands;
+    private final IngredientRepository ingredientRepository;
+//    private EntityManager em;
     @Override
     public Set<Recipe> getRecipe() {
         var recipes = new HashSet<Recipe>();
@@ -32,21 +35,21 @@ public class RecipeServiceImpl implements RecipeService{
     public Recipe findById(Long id) {
         var byId = recipeRepository.findById(id);
         if (byId.isEmpty()) {
-            throw new RuntimeException("Null recipe returned");
+            throw new NotFoundException("Recipe Not Found, for id value: " + id);
         }
         return byId.get();
     }
 
     @Override
     @Transactional
-    public RecipeCommands findCommandById(Long id) {
+    public RecipeCommand findCommandById(Long id) {
         return recipeToRecipeCommands.convert(findById(id));
     }
 
 
     @Override
     @Transactional
-    public RecipeCommands saveRecipeCommand(RecipeCommands recipeCommand) {
+    public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
         var detachRecipe = recipeCommandToRecipe.convert(recipeCommand);
         if (detachRecipe == null) return null;
         var savedRecipe = recipeRepository.save(detachRecipe);
@@ -57,6 +60,13 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public void deleteByIdLong(Long id) {
+
+        var recipe = recipeRepository.findById(id);
+        recipe.ifPresent(val -> {
+            var ingredients = ingredientRepository.findAllByRecipe_Id(id);
+            ingredients.forEach(value -> value.setRecipe(null));
+        });
+
         recipeRepository.deleteById(id);
     }
 

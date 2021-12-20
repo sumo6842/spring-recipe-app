@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -23,7 +23,6 @@ import static lombok.AccessLevel.NONE;
 public class Recipe {
 
     @Id
-//    @Setter(NONE)
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 

@@ -1,8 +1,6 @@
 package com.springframework.springrecipeapp.converters;
 
-import com.springframework.springrecipeapp.commands.IngredientsCommand;
-import com.springframework.springrecipeapp.commands.NotesCommand;
-import com.springframework.springrecipeapp.commands.RecipeCommands;
+import com.springframework.springrecipeapp.commands.RecipeCommand;
 import com.springframework.springrecipeapp.model.Recipe;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
@@ -10,17 +8,19 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 
 @Component
 @RequiredArgsConstructor
-public class RecipeCommandToRecipe implements Converter<RecipeCommands, Recipe> {
+public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
    private final CategoryCommandToCategory categoryCommandToCategory;
    private final IngredientsCommandToIngredient ingredientsCommandToIngredient;
    private final NotesCommandToNotes notesCommandToNotes;
 
     @Synchronized
     @Override
-    public Recipe convert(@Nullable RecipeCommands source) {
+    public Recipe convert(@Nullable RecipeCommand source) {
         if (source == null ) return null;
         final var recipe = new Recipe();
         recipe.setId(source.getId());
@@ -31,6 +31,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommands, Recipe> 
         recipe.setServings(source.getServings());
         recipe.setSource(source.getSource());
         recipe.setUrl(source.getUrl());
+        recipe.setNotes(Objects.requireNonNull(notesCommandToNotes.convert(source.getNotes())));
         if (source.getCategories().size() > 0) {
             source.getCategories()
                     .stream().map(categoryCommandToCategory::convert)
